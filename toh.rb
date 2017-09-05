@@ -10,34 +10,31 @@ def make_move(board, move, tower_height)
 end
 
 def display_board(board, tower_height)
-  peg1 = [[]]
+  peg1 = []
 
-  peg2 =  [[]]
+  peg2 =  []
 
-  peg3 = [[]]
+  peg3 = []
 
-
+  (tower_height-board[0].length).times { peg1 << (' ' * tower_height) }
+  
   board[0].each do |disc|
-      peg1[0] << 'o' * disc 
+      peg1 << 'o' * disc 
   end 
 
-  (tower_height-board[0].length).times { peg1[0].unshift(' ' * tower_height) }
+  (tower_height-board[1].length).times { peg2 << (' ' * tower_height) } 
 
   board[1].each do |disc|
-      peg2[0] << 'o' * disc 
+      peg2 << 'o' * disc 
   end 
 
-  (tower_height-board[1].length).times { peg2[0].unshift(' ' * tower_height) }
-
+  (tower_height-board[2].length).times { peg3 << (' ' * tower_height) }
 
   board[2].each do |disc|
-      peg3[0] << 'o' * disc 
+      peg3 << 'o' * disc 
   end 
 
-  (tower_height-board[2].length).times { peg3[0].unshift(' ' * tower_height) }
-
-  tower_height.times { |i| puts peg1[0][i] + ' ' + peg2[0][i] + ' ' + peg3[0][i] }
-
+  tower_height.times { |i| puts peg1[i] + ' ' + peg2[i] + ' ' + peg3[i] }
 end
 
 def valid_move?(tower_height, move, board)
@@ -48,7 +45,7 @@ def valid_move?(tower_height, move, board)
 end
 
 def win?(board, tower_height)
-  board.any? { |peg| peg.size == tower_height }
+  board[1..2].any? { |peg| peg.size == tower_height }
 end
 
 puts "Welcome to Tower of Hanoi!"
