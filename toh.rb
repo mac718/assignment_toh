@@ -43,12 +43,19 @@ end
 def valid_move?(tower_height, move, board)
   move.length == 3 && (1..tower_height).include?(move[0].to_i) && 
   move[1] == ',' && (1..tower_height).include?(move[2].to_i) &&
-  (board[move[2].to_i - 1].empty? || board[move[0].to_i - 1][0] < board[move[2].to_i - 1][0])
+  (board[move[2].to_i - 1].empty? || board[move[0].to_i - 1][0] < board[move[2].to_i - 1][0]) &&
+  !board[move[0].to_i - 1].empty?
 end
 
 def win?(board, tower_height)
   board.any? { |peg| peg.size == tower_height }
 end
+
+puts "Welcome to Tower of Hanoi!"
+puts "Instructions:"
+puts "Enter where you'd like to move from and to"
+puts "in the format '1,3'. Enter 'q' to quit."
+puts "Current Board:"
 
 puts "Specify tower height"
 tower_height = gets.chomp.to_i 
