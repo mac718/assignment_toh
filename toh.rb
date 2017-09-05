@@ -66,13 +66,16 @@ display_board(board, tower_height)
 loop do 
   puts "Enter move:"
   move = gets.chomp
+  break if move.downcase == 'q'
   while !valid_move?(tower_height, move, board)
     puts "Invalid move, try again:"
     move = gets.chomp
+    break if move.downcase == 'q'
   end
+  break if move.downcase == 'q'
   move = [move[0].to_i - 1, move[2].to_i - 1]
   make_move(board, move, tower_height)
   break if win?(board, tower_height)
 end
 
-puts "You win!"
+win?(board, tower_height) ? (puts "You win!") : (puts "Thanks for playing!")
