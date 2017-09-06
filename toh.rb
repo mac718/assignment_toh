@@ -23,6 +23,8 @@ class TowerOfHanoi
          
     @tower_height.times { |i| puts peg1[i].ljust(@tower_height) + ' ' + peg2[i].ljust(@tower_height) +  
       ' ' + peg3[i].ljust(@tower_height) }
+
+    3.times { |i| print "#{i + 1}".center(@tower_height) + ' '}
   end
 
   def valid_move?(tower_height, move, board)
