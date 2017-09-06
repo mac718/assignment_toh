@@ -4,12 +4,12 @@ class TowerOfHanoi
     @board = [(1..@tower_height).to_a, [], []]
   end
 
-  def make_move(board, move, tower_height)
-    board[move[1]].unshift(board[move[0]].shift)
-    display_board(@board, @tower_height)
+  def make_move(move)
+    @board[move[1]].unshift(@board[move[0]].shift)
+    display_board
   end
 
-  def display_board(board, tower_height)
+  def display_board
     peg1, peg2, peg3 = [], [], []
 
     (@tower_height - @board[0].length).times { peg1 << (' ' * @tower_height) }
@@ -27,7 +27,7 @@ class TowerOfHanoi
     3.times { |i| print "#{i + 1}".center(@tower_height) + ' '}
   end
 
-  def valid_move?(tower_height, move, board)
+  def valid_move?(move)
     move.length == 3 && (1..@tower_height).include?(move[0].to_i) && 
     move[1] == ',' && (1..@tower_height).include?(move[2].to_i) &&
     (@board[move[2].to_i - 1].empty? || (!@board[move[0].to_i - 1].empty? && 
@@ -35,32 +35,34 @@ class TowerOfHanoi
     !@board[move[0].to_i - 1].empty?
   end
 
-  def win?(board, tower_height)
+  def win?
     @board[1..2].any? { |peg| peg.size == @tower_height }
   end
 
   def play
     loop do 
+      puts "**************************"
       puts "Welcome to Tower of Hanoi!"
+      puts "**************************"
       puts "Instructions:"
       puts "Enter where you'd like to move from and to"
       puts "in the format '1,3'. Enter 'q' to quit."
       puts "Current Board:"
-      display_board(@board, @tower_height)
+      display_board
       puts "Enter move >"
       move = gets.chomp
       break if move.downcase == 'q'
-      while !valid_move?(@tower_height, move, @board)
+      while !valid_move?(move)
         puts "Invalid move, try again >"
         move = gets.chomp
         break if move.downcase == 'q'
       end
       break if move.downcase == 'q'
       move = [move[0].to_i - 1, move[2].to_i - 1]
-      make_move(@board, move, @tower_height)
-      break if win?(@board, @tower_height)
+      make_move(move)
+      break if win?
     end
-    win?(@board, @tower_height) ? (puts "You win!") : (puts "Thanks for playing!")
+    win? ? (puts "You win!") : (puts "Thanks for playing!")
   end
 end
 
